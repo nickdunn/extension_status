@@ -22,15 +22,19 @@ jQuery(function() {
 			status.empty();
 			
 			var id = row.find('input[type="checkbox"]').attr('name').replace(/(items\[)([a-z0-9-_]+)(\])/gi, '$2');
-
+			
 			$.ajax({
 				url: '/symphony/extension/extension_status/proxy/?id=' + id,
 				dataType: 'xml',
 				success: function(response) {
 					response = $(response).find('response');
-					console.log(response)
-					if(response.attr('compatible') == 'yes') {
-						status.text(response.attr('latest'));
+					if(response.attr('error') == '404') {
+						status.text('Not found');
+					}
+					else if(response.attr('compatible-version-exists') == 'yes') {
+						status.html('Compatible; use <a href="' + response.attr('latest-url') + '">' + response.attr('latest') + "</a>");
+					} else {
+						status.text('Not compatible with ' + response.attr('symphony-version'));
 					}
 				}
 			})
