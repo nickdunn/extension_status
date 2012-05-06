@@ -4,10 +4,10 @@ jQuery(function() {
 	var table = $('#contents table');
 	var context = $('#context');
 	
-	table.find('thead th:eq(2)').after('<th>Status</th>');
+	table.find('thead th:last').after('<th>Status</th>');
 	
 	table.find('tbody tr').each(function() {
-		$(this).find('td:eq(2)').after('<td class="status"></td>');
+		$(this).find('td:last').after('<td class="status"></td>');
 	});
 	
 	context.append('<ul class="actions"></ul>');
