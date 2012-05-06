@@ -2,15 +2,6 @@
 
 	Class extension_extension_status extends Extension {
 
-		public function about() {
-			return array(
-				'name' => 'Extension Status',
-				'version' => '0.2',
-				'release-date' => '2012-04-20',
-				'description' => ''
-			);
-		}
-
 		public function getSubscribedDelegates(){
 			return array(
 				array(
