@@ -46,10 +46,12 @@
 		    if(count($compatibility) == 0) {
 		        $response->setAttribute('compatible-version-exists', 'no');
 		    } else {
+				$latest_version = $compatibility[0]->attributes()->use;
 				$url = $extension->xpath("//link[@rel='github:page']/@href");
 		        $response->setAttribute('compatible-version-exists', 'yes');
-				$response->setAttribute('latest-url', (string)$url[0] . '/tree/' . $compatibility[0]->attributes()->use);
-		        $response->setAttribute('latest', $compatibility[0]->attributes()->use);
+				$response->setAttribute('latest-url', (string)$url[0] . '/tree/' . $latest_version);
+		        $response->setAttribute('latest', $latest_version);
+				$response->setAttribute('can-update', version_compare($latest_version, $current_version, '>') ? 'yes' : 'no');
 		    }
 
 		    echo $response->generate();die;

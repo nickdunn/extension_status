@@ -24,17 +24,22 @@ jQuery(function() {
 			var id = row.find('input[type="checkbox"]').attr('name').replace(/(items\[)([a-z0-9-_]+)(\])/gi, '$2');
 			
 			$.ajax({
-				url: '/symphony/extension/extension_status/proxy/?id=' + id,
+				url: Symphony.Context.get('root') + '/symphony/extension/extension_status/proxy/?id=' + id,
 				dataType: 'xml',
 				success: function(response) {
 					response = $(response).find('response');
 					if(response.attr('error') == '404') {
 						status.text('Not found');
 					}
-					else if(response.attr('compatible-version-exists') == 'yes') {
-						status.html('Compatible; use <a href="' + response.attr('latest-url') + '">' + response.attr('latest') + "</a>");
+					else if(response.attr('can-update') == 'yes') {
+						status.html('Update available (<a href="' + response.attr('latest-url') + '">' + response.attr('latest') + "</a>)");
+					}
+					else if(response.attr('compatible-version-exists') == 'no') {
+						status.text('Incompatible with Symphony ' + response.attr('symphony-version'));
+						status.addClass('inactive');
 					} else {
-						status.text('Not compatible with ' + response.attr('symphony-version'));
+						status.text('Using latest version (' + response.attr('latest') + ')');
+						status.addClass('inactive');
 					}
 				}
 			})
