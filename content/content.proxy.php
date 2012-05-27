@@ -31,7 +31,7 @@
 			$ch = curl_init(); 
 			curl_setopt($ch, CURLOPT_URL, sprintf('http://symphonyextensions.com/api/extensions/%s/', $id));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Symphony ' . Symphony::Configuration()->get('version', 'symphony'));
+			curl_setopt($ch, CURLOPT_USERAGENT, 'extension_status; Symphony ' . Symphony::Configuration()->get('version', 'symphony'));
 			curl_setopt($ch, CURLOPT_REFERER, URL);
 
 			$xml = curl_exec($ch); 
