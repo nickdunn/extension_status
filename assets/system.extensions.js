@@ -32,7 +32,7 @@ jQuery(function() {
 						status.text('Not found');
 					}
 					else if(response.attr('can-update') == 'yes') {
-						status.html('Update available (<a href="' + response.attr('latest-url') + '">' + response.attr('latest') + "</a>)");
+						status.html('Update available (<a href="' + response.attr('latest-url') + '">' + response.attr('latest') + "</a> or <a href='" + response.attr('extension-url') + "#changelog'>more information</a>)");
 					}
 					else if(response.attr('compatible-version-exists') == 'no') {
 						status.text('Incompatible with Symphony ' + response.attr('symphony-version'));

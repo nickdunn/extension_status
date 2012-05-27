@@ -47,11 +47,14 @@
 		        $response->setAttribute('compatible-version-exists', 'no');
 		    } else {
 				$latest_version = $compatibility[0]->attributes()->use;
-				$url = $extension->xpath("//link[@rel='github:page']/@href");
+				$github_url = $extension->xpath("//link[@rel='github:page']/@href");
+				$extension_url = $extension->xpath("//link[@rel='site:extension']/@href");
+				
 		        $response->setAttribute('compatible-version-exists', 'yes');
-				$response->setAttribute('latest-url', (string)$url[0] . '/tree/' . $latest_version);
+				$response->setAttribute('latest-url', (string)$github_url[0] . '/tree/' . $latest_version);
 		        $response->setAttribute('latest', $latest_version);
 				$response->setAttribute('can-update', version_compare($latest_version, $current_version, '>') ? 'yes' : 'no');
+				$response->setAttribute('extension-url', 'http://symphonyextensions.com' . (string)$extension_url[0]);
 		    }
 
 		    echo $response->generate();die;
