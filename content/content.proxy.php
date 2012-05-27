@@ -28,8 +28,14 @@
 		        echo $response->generate();die;
 		    }
 		    
-		    $xml = @file_get_contents(sprintf('http://symphonyextensions.com:8080/api/extensions/%s/', $id));
-		    
+			$ch = curl_init(); 
+			curl_setopt($ch, CURLOPT_URL, sprintf('http://symphonyextensions.com/api/extensions/%s/', $id));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+			curl_setopt($ch, CURLOPT_USERAGENT, 'Symphony ' . Symphony::Configuration()->get('version', 'symphony'));
+			curl_setopt($ch, CURLOPT_REFERER, URL);
+
+			$xml = curl_exec($ch); 
+			
 		    if(!$xml) {
 		        $response->setAttribute('error', '404');
 		        echo $response->generate();die;
